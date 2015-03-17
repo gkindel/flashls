@@ -55,6 +55,7 @@ function listStreams(list, container) {
               break;
              case "timeChange":
              case "timeupdate":
+             case "durationchange":
              case "progress":
                break;
              default:
@@ -71,12 +72,13 @@ function listStreams(list, container) {
                 src: "http://streambox.fr/playlists/test_001/stream.m3u8",
                 //src: "http://localhost:8082/playlists/test_001/stream.m3u8",
                 autoPlay: "false",
+//                streamType : "dvr",
                 verbose: true,
-                controlBarAutoHide: "true",
+                controlBarAutoHide: false,
                 controlBarPosition: "bottom",
                 poster: "images/poster.png",
                 javascriptCallbackFunction: "jsbridge",
-                plugin_hls: "../../bin/release/flashlsOSMF.swf",
+                plugin_hls: "../../bin/debug/flashlsOSMF.swf",
                 hls_minbufferlength: -1,
                 hls_maxbufferlength: 30,
                 hls_lowbufferlength: 3,
@@ -164,6 +166,7 @@ Check with your own Playlist ! <a href="http://kb2.adobe.com/cps/142/tn_14213.ht
 <p>
   
 <script type="text/javascript">
+    document.getElementById('userInput').value = parameters.src;
 function userSubmit() {
   window.location = getlink(document.getElementById('userInput').value);
 }
