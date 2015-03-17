@@ -488,9 +488,12 @@
                         Log.debug2(Hex.fromArray(bytes2));
                     }
                 }
-                // invalid fragment
-                _fraghandleIOError("invalid content received");
+                // invalid fragment, just skip
+                // _fraghandleIOError("invalid content received");
                 fragData.bytes = null;
+                _frag_previous = _frag_current;
+                _pts_just_analyzed = true;
+                _fragLoadCompleteHandler(null);
                 return;
             }
             fragData.bytes = null;
