@@ -291,6 +291,8 @@ package org.mangui.hls.stream {
                 case HLSSeekStates.SEEKING:
                     return  Math.max(0, max_pos - _seek_position_requested);
                 case HLSSeekStates.SEEKED:
+                case HLSSeekStates.IDLE:
+                default:
                     if (audio_expected) {
                         if (video_expected) {
                             return Math.min(audioBufferLength, videoBufferLength);
@@ -300,9 +302,6 @@ package org.mangui.hls.stream {
                     } else {
                         return videoBufferLength;
                     }
-                case HLSSeekStates.IDLE:
-                default:
-                    return 0;
             }
         }
 
@@ -333,7 +332,7 @@ package org.mangui.hls.stream {
             var duration : Number = 0;
             if (_seek_pos_reached) {
                 var netStreamBuffer : Number = (_hls.stream as HLSNetStream).netStreamBufferLength;
-                if (netStreamBuffer < MIN_NETSTREAM_BUFFER_SIZE) {
+                if (netStreamBuffer < MIN_NETSTREAM_BUFFER_SIZE && _hls.playbackState != HLSPlayStates.IDLE) {
                     duration = MAX_NETSTREAM_BUFFER_SIZE - netStreamBuffer;
                 }
             } else {
