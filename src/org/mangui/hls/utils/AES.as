@@ -95,7 +95,14 @@
                         // }
                         _read_position += _data.bytesAvailable;
                         decryptdata = _decryptCBC(_data, _data.bytesAvailable);
-                        unpad(decryptdata);
+                        try {
+                            unpad(decryptdata);
+                        }
+                        catch (e:Error){
+                            CONFIG::LOGGING {
+                                Log.debug("AES:failed unpad");
+                            }
+                        }
                     } else {
                         // data not complete, and available data less than chunk size, return
                         return false;
